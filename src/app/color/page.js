@@ -1,10 +1,12 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useTheme } from "../themeContext";
 
 // PaletteGenerator component
 const PaletteGenerator = () => {
-  const [baseColor, setBaseColor] = useState('#000000'); // State for the base color
+  const [baseColor, setBaseColor] = useState('#3B82F6'); // Default to a blue color
   const [palette, setPalette] = useState([]); // State for the generated palette
+  const { state } = useTheme();
 
   // Function to generate a palette based on the base color
   const generatePalette = () => {
@@ -19,6 +21,11 @@ const PaletteGenerator = () => {
 
     setPalette(newPalette); // Update the state with the new palette
   };
+
+  // Use useEffect to generate a default palette when the component mounts
+  useEffect(() => {
+    generatePalette();
+  }, []); // Empty dependency array ensures this runs only once on mount
 
   // Function to convert HEX color to HSL color
   const hexToHSL = (hex) => {
@@ -58,32 +65,36 @@ const PaletteGenerator = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Palette Generator</h2>
-      <div className="mb-4">
-        <input
-          type="color"
-          value={baseColor}
-          onChange={(e) => setBaseColor(e.target.value)} // Update base color on change
-          className="mr-2"
-        />
-        <button
-          onClick={generatePalette} // Trigger palette generation
-          className="px-4 py-2 bg-blue-500 text-white rounded"
-        >
-          Generate Palette
-        </button>
-      </div>
-      <div className="flex space-x-2">
-        {palette.map((color, index) => (
-          <div key={index} className="text-center">
-            <div
-              className="w-20 h-20 rounded"
-              style={{ backgroundColor: color }} // Apply generated color
-            ></div>
-            <p className="mt-1 font-mono text-sm">{color}</p> {/* Display HEX color value */}
+    <div className={state.darkMode ? "dark" : ""}>
+      <div className="flex justify-center items-center min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white">
+        <div className="p-4">
+          <h2 className="text-2xl font-bold mb-4">Palette Generator</h2>
+          <div className="mb-4">
+            <input
+              type="color"
+              value={baseColor}
+              onChange={(e) => setBaseColor(e.target.value)}
+              className="mr-2"
+            />
+            <button
+              onClick={generatePalette}
+              className="px-4 py-2 bg-blue-500 text-white rounded"
+            >
+              Generate Palette
+            </button>
           </div>
-        ))}
+          <div className="flex space-x-2">
+            {palette.map((color, index) => (
+              <div key={index} className="text-center">
+                <div
+                  className="w-20 h-20 rounded"
+                  style={{ backgroundColor: color }}
+                ></div>
+                <p className="mt-1 font-mono text-sm">{color}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

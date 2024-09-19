@@ -7,6 +7,7 @@ const navItems = [
   { href: "/", label: "Home" },
   { href: "/color", label: "Color Palette" },
   { href: "/signature", label: "Signature" },
+  { href: "/encrypt", label: "Encrypt" },
 ];
 
 export default function Home() {

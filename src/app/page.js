@@ -8,7 +8,8 @@ const navItems = [
   { href: "/color", label: "Color Palette" },
   { href: "/signature", label: "Signature" },
   { href: "/encrypt", label: "Encrypt" },
-  { href: "/shiyantwo", label: "ShiyanTwo"}
+  { href: "/shiyantwo", label: "ShiyanTwo"},
+  { href: "/shiyanone", label: "ShiyanOne"},
 ];
 
 export default function Home() {
